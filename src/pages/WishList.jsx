@@ -20,6 +20,8 @@ const Wishlist = () => {
     (total, item) => total + item.price,
     0
   );
+  
+  //something is done here
 
   const showBorder = wishlistItems.length > 0;
 
