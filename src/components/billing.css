@@ -1,0 +1,77 @@
+.order-summary-card {
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'inter', sans-serif;
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+  font-size: 16px;
+}
+
+.save-label {
+  color: #2e7d32;
+}
+
+.save-amount {
+  color: #2e7d32;
+}
+
+.summary-divider {
+  border: none;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 16px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.total-amount {
+  font-size: 22px;
+}
+
+.checkout-btn {
+  width: 100%;
+  background-color: #1f1f21;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.checkout-btn:hover {
+  background-color: #333;
+}
+
+.shipping-note {
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 12px;
+  color: #71717a;
+}
