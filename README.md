@@ -1,12 +1,26 @@
-# React + Vite
+# Bynocturne E-Commerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
 
-Currently, two official plugins are available:
+This project is an e-commerce web application built as part of my React Masterclass journey. The goal is to create a modern, responsive, and user-friendly online store using React and related technologies.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What I Have Done
 
-## Expanding the ESLint configuration
+- Set up the project structure using Create React App.
+- Implemented basic routing with React Router.
+- Designed and developed the homepage, product listing, and product detail pages.
+- Integrated a mock API for product data.
+- Added a shopping cart feature with add/remove functionality.
+- Styled components using CSS modules for modularity and maintainability.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Future Plans
+
+- Integrate a real backend for product and order management.
+- Implement user authentication and authorization.
+- Add payment gateway integration for secure checkout.
+- Improve UI/UX with advanced animations and responsive design.
+- Write unit and integration tests for better reliability.
+- Deploy the application for public access.
+
+---
+*Thank you for checking out my project! Stay tuned for more updates as I continue to improve and expand this e-commerce platform.*
