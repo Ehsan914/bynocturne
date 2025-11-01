@@ -13,16 +13,11 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(5000);
 
   useEffect(() => {
     getAllProducts().then(res => {
-    const enrichedProducts = res.data.map(prod => ({
-        ...prod,
-        randomRating: (Math.random() * 2 + 3).toFixed(1),
-        ratingAmount: Math.round(Math.random() * 100 + 10)
-      }));
-      setProducts(enrichedProducts);
+      setProducts(res.data);
     });
   }, []);
 
@@ -43,7 +38,7 @@ const Home = () => {
           <section className="filter-heading-container">
             <h2 className="filter-heading">Filters</h2>
             <button className='clear-filters' 
-            onClick={() => (setMaxPrice(1000), setMinPrice(0)
+            onClick={() => (setMaxPrice(5000), setMinPrice(0)
             , setSelectedCategories([]))}>Clear Filters</button>
           </section>
           <ProductContext.Provider value={products}>
@@ -67,7 +62,7 @@ const Home = () => {
                 <li key={prod.id}>
                   <ProductCard
                     product={prod}
-                    rating={prod.randomRating}
+                    rating={prod.rating}
                     ratingAmount={prod.ratingAmount}
                   />
                 </li>

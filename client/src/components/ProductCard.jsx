@@ -3,7 +3,7 @@ import { LiaStarSolid } from "react-icons/lia";
 import { IoHeartSharp } from "react-icons/io5";
 import { CountContext } from "../context/CountContext";
 
-const ProductCard = ({ product, rating, ratingAmount }) => {
+const ProductCard = ({ product }) => {
     const prod = product;
     const {
         wishlistItems = [],
@@ -19,7 +19,7 @@ const ProductCard = ({ product, rating, ratingAmount }) => {
         addToCart(prod);
     };
 
-    console.log(prod)
+    console.log(prod.ratingAmount);
     
     const toggleWishlist = () => {
         if (wishlistItems.some(item => item.id === prod.id)) {
@@ -50,7 +50,7 @@ const ProductCard = ({ product, rating, ratingAmount }) => {
                 <p className="prod-cate">{prod.category.name}</p>
                 <p className="prod-rate">
                 <LiaStarSolid className="rating-star" />
-                {rating} ({ratingAmount})
+                {prod.rating} ({prod.ratingAmount})
                 </p>
             </div>
             <h3 className="prod-title">{prod.title}</h3>

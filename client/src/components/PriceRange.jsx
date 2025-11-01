@@ -4,7 +4,7 @@ import { PriceContext } from "../context/PriceContext";
 const PriceRange = () => {
   const { minPrice, setMinPrice, maxPrice, setMaxPrice } = useContext(PriceContext);
   const min = 0;
-  const max = 1000;
+  const max = 5000;
   const step = 10;
 
   const handleMinChange = (e) => {

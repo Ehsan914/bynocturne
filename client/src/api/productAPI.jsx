@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const inStance = axios.create({
-    baseURL: "https://api.escuelajs.co/api/v1",
+    baseURL: "http://localhost:5000/api/",
 });
 
 export const getAllProducts = () => inStance.get('/products');
