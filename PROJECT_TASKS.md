@@ -8,11 +8,11 @@
 - [x] Image serving setup
 
 ### 📋 Category Routes & Controller
-- [ ] Create categories table in database
-- [ ] Create `/api/categories` endpoint (GET all)
-- [ ] Create `/api/categories/:id` endpoint (GET by id)
-- [ ] Create `/api/categories/:id/products` endpoint (GET products by category)
-- [ ] Build category controller with database queries
+- [x] Create categories table in database
+- [x] Create `/api/categories` endpoint (GET all)
+- [x] Create `/api/categories/:id` endpoint (GET by id)
+- [x] Create `/api/categories/:id/products` endpoint (GET products by category)
+- [x] Build category controller with database queries
 - [ ] Seed categories data
 - [ ] Test all category endpoints
 

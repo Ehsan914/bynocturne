@@ -1,14 +1,18 @@
-import { useContext } from 'react';
-import { ProductContext } from '../context/ProductContext';
+import { useState, useContext, useEffect } from 'react';
 import { CategoryContext } from '../context/CategoryContext';
+import { getAllCategories } from '../api/categoryAPI';
 
 const Category = () => {
-  const prod = useContext(ProductContext);
   const categories = useContext(CategoryContext);
-  // Get unique category names
-  const uniqueCategories = [
-    ...new Set(prod.map((product) => product.category.name))
-  ];
+  const [fetchedCategories, setFetchedCategories] = useState([]);
+  
+  useEffect(() => {
+    getAllCategories()
+      .then(res => {
+        setFetchedCategories(res.data);
+      });
+  }, []);
+  
 
   const handleCategoryChange = (e) => {
     const {value, checked} = e.target;
@@ -24,12 +28,12 @@ const Category = () => {
         <button className='clear-category' onClick={() => categories.setSelectedCategories([])}>Clear All</button>
       </div>
       <form className='category-options'>
-        {uniqueCategories.map((category) => (
-          <section className="category-option" key={category}>
+        {fetchedCategories.map((category) => (
+          <section className="category-option" key={category.id}>
             <input type="checkbox" className='category-checkbox' 
-            value={category} onChange={handleCategoryChange}
-            checked={categories.selectedCategories.includes(category)}/>
-            <p>{category}</p>
+            value={category.name} onChange={handleCategoryChange}
+            checked={categories.selectedCategories.includes(category.name)}/>
+            <p>{category.name}</p>
           </section>
         ))}
       </form>

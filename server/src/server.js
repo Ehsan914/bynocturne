@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import productRoutes from './routes/productRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
 
 dotenv.config();
 
@@ -31,7 +32,7 @@ app.get('/', (req, res) => {
 // Product routes
 app.use('/api/products', productRoutes);
 
-
+app.use('/api/categories', categoryRoutes);
 
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000;
