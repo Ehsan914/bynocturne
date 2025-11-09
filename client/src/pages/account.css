@@ -1,0 +1,44 @@
+.account-page-container {
+    width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.account-heading-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.account-heading {
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 5px;
+    user-select: none;
+}
+
+.account-text {
+    font-size: 16px;
+    font-weight: 400;
+    user-select: none;
+    color: #71717a;
+}
+
+.account-heading-icon {
+    font-size: 14px;
+    stroke-width: 1.5;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.account-heading-icon:hover {
+    background-color: #f3f4f6;
+    border-radius: 5px;
+}
+
+.account-heading-icon:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}

@@ -13,20 +13,21 @@
 - [x] Create `/api/categories/:id` endpoint (GET by id)
 - [x] Create `/api/categories/:id/products` endpoint (GET products by category)
 - [x] Build category controller with database queries
-- [ ] Seed categories data
-- [ ] Test all category endpoints
+- [x] Connect Category component to API (frontend)
+- [x] Seed categories data
+- [x] Test all category endpoints
 
 ### 👤 User Routes & Controller
-- [ ] Create users table in database
-- [ ] Create `/api/users/register` endpoint (POST)
-- [ ] Create `/api/users/login` endpoint (POST)
-- [ ] Create `/api/users/profile` endpoint (GET - authenticated)
+- [x] Create users table in database
+- [x] Create `/api/auth/register` endpoint (POST)
+- [x] Create `/api/auth/login` endpoint (POST)
+- [x] Create `/api/auth/profile` endpoint (GET - authenticated)
 - [ ] Create `/api/users/profile` endpoint (PUT - update profile)
-- [ ] Implement JWT token generation
-- [ ] Implement password hashing (bcrypt)
-- [ ] Create authentication middleware
-- [ ] Test user registration flow
-- [ ] Test user login flow
+- [x] Implement JWT token generation
+- [x] Implement password hashing (bcrypt)
+- [x] Create authentication middleware
+- [x] Test user registration flow
+- [x] Test user login flow
 - [ ] Test profile management
 
 ### 🛒 Cart Backend
@@ -66,28 +67,29 @@
 ## 🎨 Frontend Integration Tasks
 
 ### 🔌 Connect Product API to Frontend
-- [ ] Remove mock data from ProductContext
-- [ ] Implement `fetchProducts()` API call
-- [ ] Implement `fetchProductById()` API call
-- [ ] Add loading states for product fetching
-- [ ] Add error handling for failed requests
-- [ ] Display loading spinners/skeletons
-- [ ] Display error messages to users
-- [ ] Test product list page
-- [ ] Test product detail page
+- [x] Remove mock data from ProductContext
+- [x] Implement `fetchProducts()` API call
+- [x] Implement `fetchProductById()` API call
+- [x] Add loading states for product fetching
+- [x] Add error handling for failed requests
+- [x] Display loading spinners/skeletons
+- [x] Display error messages to users
+- [x] Test product list page
+- [x] Test product detail page
 
 ### 🔐 Implement Authentication Flow
 - [ ] Create Login page UI
 - [ ] Create Register page UI
-- [ ] Connect login form to `/api/users/login`
-- [ ] Connect register form to `/api/users/register`
-- [ ] Store JWT token in localStorage/sessionStorage
-- [ ] Create AuthContext for global auth state
-- [ ] Implement `useAuth()` custom hook
-- [ ] Add authentication middleware to API calls
+- [ ] Connect login form to `/api/auth/login`
+- [ ] Connect register form to `/api/auth/register`
+- [x] Store JWT token in localStorage
+- [x] Create AuthContext for global auth state
+- [x] Create AuthProvider with login/logout/register functions
+- [x] Create auth API functions (loginUser, registerUser, getUserProfile)
+- [x] Add authentication headers to API calls (Bearer token)
 - [ ] Create ProtectedRoute component
 - [ ] Protect user-specific routes (cart, wishlist, orders, profile)
-- [ ] Implement logout functionality
+- [ ] Implement logout functionality in UI (Navbar)
 - [ ] Add "Forgot Password" flow
 - [ ] Test complete auth flow
 

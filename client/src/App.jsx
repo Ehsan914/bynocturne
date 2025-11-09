@@ -5,6 +5,7 @@ import Wishlist from './pages/Wishlist'
 import Account from './pages/Account'
 import Navbar from './components/Navbar'
 import './navbar.css'
+import Login from './pages/Login'
 
 // Admin
 import Dashboard from './pages/admin/Dashboard'
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/account" element={<Account />} />
+        <Route path='/login' element={<Login/>} />
         {/* Admin */}
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/products" element={<Products />} />
