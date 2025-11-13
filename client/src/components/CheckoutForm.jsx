@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { createPaymentIntent } from '../api/paymentAPI';
 import toast from 'react-hot-toast';
 
 const CheckoutForm = ({ amount, onSuccess, onCancel }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [isProcessing, setIsProcessing] = useState(false);
-    const [clientSecret, setClientSecret] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,43 +17,29 @@ const CheckoutForm = ({ amount, onSuccess, onCancel }) => {
         setIsProcessing(true);
 
         try {
-            // Create payment intent if not already created
-            if (!clientSecret) {
-                const { clientSecret: newClientSecret } = await createPaymentIntent(amount);
-                setClientSecret(newClientSecret);
+            // Submit the form to validate fields
+            const { error: submitError } = await elements.submit();
+            
+            if (submitError) {
+                toast.error(submitError.message);
+                setIsProcessing(false);
+                return;
+            }
 
-                // Confirm payment
-                const { error, paymentIntent } = await stripe.confirmPayment({
-                    elements,
-                    clientSecret: newClientSecret,
-                    confirmParams: {
-                        return_url: window.location.origin + '/payment/success',
-                    },
-                    redirect: 'if_required',
-                });
+            // Confirm payment
+            const { error, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: window.location.origin + '/payment/success',
+                },
+                redirect: 'if_required',
+            });
 
-                if (error) {
-                    toast.error(error.message);
-                } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    toast.success('Payment successful!');
-                    onSuccess(paymentIntent);
-                }
-            } else {
-                // If client secret exists, just confirm
-                const { error, paymentIntent } = await stripe.confirmPayment({
-                    elements,
-                    confirmParams: {
-                        return_url: window.location.origin + '/payment/success',
-                    },
-                    redirect: 'if_required',
-                });
-
-                if (error) {
-                    toast.error(error.message);
-                } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-                    toast.success('Payment successful!');
-                    onSuccess(paymentIntent);
-                }
+            if (error) {
+                toast.error(error.message);
+            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                toast.success('Payment successful!');
+                onSuccess(paymentIntent);
             }
         } catch (error) {
             console.error('Payment error:', error);

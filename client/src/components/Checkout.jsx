@@ -2,32 +2,36 @@ import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
-import { getStripeConfig } from '../api/paymentAPI';
+import { getStripeConfig, createPaymentIntent } from '../api/paymentAPI';
 import toast from 'react-hot-toast';
 import './checkout.css';
 
 const Checkout = ({ amount, onSuccess, onCancel }) => {
     const [stripePromise, setStripePromise] = useState(null);
+    const [clientSecret, setClientSecret] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const loadStripeKey = async () => {
+        const initializePayment = async () => {
             try {
+                // Load Stripe publishable key
                 const config = await getStripeConfig();
-                console.log('Stripe config from backend:', config);
-                console.log('Publishable key:', config.publishableKey);
                 const stripe = await loadStripe(config.publishableKey);
                 setStripePromise(stripe);
+
+                // Create payment intent
+                const { clientSecret: newClientSecret } = await createPaymentIntent(amount);
+                setClientSecret(newClientSecret);
             } catch (error) {
-                console.error('Error loading Stripe:', error);
+                console.error('Error initializing payment:', error);
                 toast.error('Failed to initialize payment system');
             } finally {
                 setLoading(false);
             }
         };
 
-        loadStripeKey();
-    }, []);
+        initializePayment();
+    }, [amount]);
 
     if (loading) {
         return (
@@ -37,7 +41,7 @@ const Checkout = ({ amount, onSuccess, onCancel }) => {
         );
     }
 
-    if (!stripePromise) {
+    if (!stripePromise || !clientSecret) {
         return (
             <div className="checkout-error">
                 <p>Payment system unavailable</p>
@@ -47,9 +51,7 @@ const Checkout = ({ amount, onSuccess, onCancel }) => {
     }
 
     const options = {
-        mode: 'payment',
-        amount: Math.round(amount * 100), // Convert to cents
-        currency: 'usd',
+        clientSecret,
         appearance: {
             theme: 'stripe',
             variables: {
