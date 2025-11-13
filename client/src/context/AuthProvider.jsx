@@ -40,7 +40,12 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data.user);
     }
 
-    const logout = () => {
+    const logout = async () => {
+        // Optional: Clear cart from database on logout
+        // Uncomment the lines below if you want to delete cart items on logout
+        // import { clearCart } from '../api/cartAPI';
+        // try { await clearCart(); } catch (err) { console.error('Failed to clear cart:', err); }
+        
         setToken('');
         setUser(null);
     }

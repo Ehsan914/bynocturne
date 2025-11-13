@@ -1,37 +1,45 @@
 import { useContext } from "react";
-import { CountContext } from "../context/CountContext";
+import { WishlistContext } from "../context/WishlistContext.js";
+import { CartContext } from "../context/CartContext";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { LuShoppingCart } from "react-icons/lu";
+import toast from 'react-hot-toast';
 import './wishlistcard.css';
 
 const WishlistCard = ({ wishlistItem }) => {
-  const {
-    setWishlistItems,
-    wishlistItems,
-    addToCart,
-    cartItems,
-  } = useContext(CountContext);
+  const { removeItem } = useContext(WishlistContext);
+  const { addToCart, isInCart } = useContext(CartContext);
 
-  const removeFromWishlist = () => {
-    const updatedWishlist = wishlistItems.filter(item => item.id !== wishlistItem.id);
-    setWishlistItems(updatedWishlist);
+  const removeFromWishlist = async () => {
+    const result = await removeItem(wishlistItem.wishlist_id);
+    if (result.success) {
+      toast.success('Removed from wishlist');
+    }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     // Add to cart with quantity = 1 if not already in cart
-    const alreadyInCart = cartItems.some(item => item.id === wishlistItem.id);
+    const alreadyInCart = isInCart(wishlistItem.product_id);
     if (!alreadyInCart) {
-      addToCart({ ...wishlistItem, quantity: 1 });
+      const result = await addToCart(wishlistItem.product_id, 1);
+      if (result.success) {
+        toast.success('Added to cart');
+      }
+    } else {
+      toast.info('Item already in cart');
     }
 
     // Remove from wishlist after adding to cart
-    removeFromWishlist();
+    await removeFromWishlist();
   };
+
+  // Handle image - it's an array from the API
+  const imageUrl = Array.isArray(wishlistItem.image) ? wishlistItem.image[0] : wishlistItem.image;
 
   return (
     <div className="wishlist-item">
       <section className="wishlist-img-container">
-        <img src={wishlistItem.images[0]} alt="" className="wishlist-item-image" />
+        <img src={imageUrl} alt={wishlistItem.name} className="wishlist-item-image" />
       </section>
 
       <section className="wishlist-item-desc">
@@ -39,11 +47,11 @@ const WishlistCard = ({ wishlistItem }) => {
           <div className="upper-left">
             <div className="category-container">
               <p className="wishlist-item-category">
-                {wishlistItem.category.name}
+                {wishlistItem.category || 'Product'}
               </p>
             </div>
             <h1 className="wishlist-item-title">
-              {wishlistItem.title}
+              {wishlistItem.name}
             </h1>
           </div>
           <div className="upper-right">

@@ -1,41 +1,44 @@
 import { useContext } from 'react';
 import './wishlist.css';
-import { CountContext } from '../context/CountContext';
+import { WishlistContext } from '../context/WishlistContext.js';
+import { CartContext } from '../context/CartContext';
 import { IoHeartOutline } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import WishlistCard from '../components/WishlistCard';
 import { LuShoppingCart } from "react-icons/lu";
 import { RiDeleteBinLine } from "react-icons/ri";
+import toast from 'react-hot-toast';
 
 const Wishlist = () => {
   const navigate = useNavigate();
-  const {
-    wishlistItems = [],
-    setWishlistItems,
-    addToCart,
-  } = useContext(CountContext);
+  const { wishlist, clearWishlist, loading } = useContext(WishlistContext);
+  const { addToCart } = useContext(CartContext);
 
-  const totalValue = wishlistItems.reduce(
-    (total, item) => total + item.price,
+  const totalValue = wishlist.reduce(
+    (total, item) => total + parseFloat(item.price),
     0
   );
   
-  //something is done here
+  const showBorder = wishlist.length > 0;
 
-  const showBorder = wishlistItems.length > 0;
-
-  const handleAddAllToCart = () => {
-    wishlistItems.forEach(item => {
-      addToCart({ ...item, quantity: 1 });
-    });
-
-    setWishlistItems([]);
+  const handleAddAllToCart = async () => {
+    let successCount = 0;
+    for (const item of wishlist) {
+      const result = await addToCart(item.product_id, 1);
+      if (result.success) successCount++;
+    }
+    await clearWishlist();
+    if (successCount > 0) {
+      toast.success(`Added ${successCount} items to cart`);
+    }
   };
 
-
-  const handleClearWishlist = () => {
-    setWishlistItems([]);
+  const handleClearWishlist = async () => {
+    const result = await clearWishlist();
+    if (result.success) {
+      toast.success('Wishlist cleared');
+    }
   };
 
   return (
@@ -49,13 +52,13 @@ const Wishlist = () => {
         }
       >
         <section className="wishlist-heading-upper">
-          <section className="wishlist-heading-container-left">
+          <section className="wishlist-heading-container-left" onClick={() => navigate(-1)}>
             <section className='wishlist-heading-icon'>
-              <FaArrowLeft onClick={() => navigate(-1)} />
+              <FaArrowLeft />
             </section>
             <section className="wishlist-heading-text-container">
               <h1 className='wishlist-heading'>My Wishlist</h1>
-              <p className='wishlist-text'>{wishlistItems.length} items saved</p>
+              <p className='wishlist-text'>{wishlist.length} items saved</p>
             </section>
           </section>
           <section className="wishlist-heading-container-right">
@@ -79,10 +82,21 @@ const Wishlist = () => {
 
       <section className="wishlist-content">
         {
-          wishlistItems.length > 0 ? (
+          loading ? (
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '400px',
+              fontSize: '18px',
+              color: '#6b7280'
+            }}>
+              Loading wishlist...
+            </div>
+          ) : wishlist.length > 0 ? (
             <ul className="wishlist-items">
-              {wishlistItems.map((wishlistItem) => (
-                <li key={wishlistItem.id}>
+              {wishlist.map((wishlistItem) => (
+                <li key={wishlistItem.wishlist_id}>
                   <WishlistCard wishlistItem={wishlistItem} />
                 </li>
               ))}

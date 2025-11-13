@@ -1,0 +1,122 @@
+.checkout-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.checkout-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #18181b;
+}
+
+.checkout-amount {
+    font-size: 24px;
+    font-weight: 600;
+    color: #18181b;
+}
+
+.checkout-loading,
+.checkout-error {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.checkout-loading p,
+.checkout-error p {
+    font-size: 18px;
+    color: #71717a;
+    margin-bottom: 20px;
+}
+
+.cancel-btn {
+    padding: 12px 32px;
+    background: #f3f4f6;
+    color: #18181b;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: #e5e7eb;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.checkout-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.cancel-payment-btn {
+    flex: 1;
+    padding: 14px;
+    background: #f3f4f6;
+    color: #18181b;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-payment-btn:hover:not(:disabled) {
+    background: #e5e7eb;
+}
+
+.cancel-payment-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pay-btn {
+    flex: 1;
+    padding: 14px;
+    background: #18181b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pay-btn:hover:not(:disabled) {
+    background: #27272a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pay-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pay-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Stripe Elements styling is handled by Stripe's appearance API in Checkout.jsx */

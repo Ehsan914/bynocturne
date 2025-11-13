@@ -4,7 +4,7 @@ import { FiUser } from "react-icons/fi";
 import { LogOut } from 'lucide-react';
 import { User } from 'lucide-react';
 import { UserPlus } from 'lucide-react';
-import { IoSearchOutline } from "react-icons/io5";
+// import { IoSearchOutline } from "react-icons/io5";
 import logo from '../assets/logo2.png'
 import { AuthContext } from "../context/AuthContext";
 import { CountContext } from '../context/CountContext';
@@ -48,10 +48,10 @@ const Navbar = () => {
                 <section className="logo" onClick={() => navigate('/')}>      
                     <img src={logo} alt="" className="logo" />
                 </section>
-                <section className="search-container">
+                {/* <section className="search-container">
                     <IoSearchOutline className="search-icon"/>
                     <input type="text" placeholder="Search products..." className="search-bar"/>
-                </section>
+                </section> */}
                 <section className="options">
                     <section className="wl-container" onClick={() => navigate('/wishlist')}>
                         <p className="wl-count" 

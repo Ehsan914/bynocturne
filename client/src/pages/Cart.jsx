@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import './cart.css'
-import { CountContext } from '../context/CountContext'
+import { CartContext } from '../context/CartContext'
 import CartCard from '../components/CartCard'
 import { LuShoppingBag } from "react-icons/lu";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -11,13 +11,14 @@ import Billing from '../components/Billing';
 const Cart = () => {
   const navigate = useNavigate();
   const {
-      cartItems = []
-  } = useContext(CountContext);
+      cart: cartItems = [],
+      loading
+  } = useContext(CartContext);
 
   return (
     <div className="cart-page-container">
       <section className="cart-heading-container">
-        <section className='cart-heading-icon'>
+        <section className='cart-heading-icon' onClick={() => navigate(-1)}>
           <FaArrowLeft />
         </section>
         <section className="cart-heading-text-container">
@@ -33,11 +34,23 @@ const Cart = () => {
         : { marginBottom: "150px" }
     }
   >
-        {cartItems.length > 0 ? (
+        {loading ? (
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '400px',
+            width: '100%',
+            fontSize: '18px',
+            color: '#6b7280'
+          }}>
+            Loading cart...
+          </div>
+        ) : cartItems.length > 0 ? (
           <>
             <ul className="cart-items">
               {cartItems.map((cartItem) => (
-                <li key={cartItem.id}>
+                <li key={cartItem.cart_id}>
                   <CartCard cartItem={cartItem} />
                 </li>
               ))}

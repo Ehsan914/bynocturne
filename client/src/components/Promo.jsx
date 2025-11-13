@@ -15,7 +15,7 @@ const Promo = () => {
 
   return (
     <div className="promo-container">
-      <h1>Promo Code</h1>
+      <h1 className="promo-heading">Promo Code</h1>
       <section className="lower-promo-desc">
         <form onSubmit={handleSubmit} className="promo-code-form">
           <input

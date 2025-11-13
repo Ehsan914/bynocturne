@@ -6,6 +6,10 @@ import { fileURLToPath } from 'url';
 import productRoutes from './routes/productRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import wishlistRoutes from './routes/wishlistRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 dotenv.config();
 
@@ -36,6 +40,18 @@ app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 
 app.use('/api/auth', authRoutes);
+
+// Cart Routes
+app.use('/api/cart', cartRoutes);
+
+// Wishlist Routes
+app.use('/api/wishlist', wishlistRoutes);
+
+// Order Routes
+app.use('/api/orders', orderRoutes);
+
+// Payment Routes
+app.use('/api/payment', paymentRoutes);
 
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000;

@@ -165,6 +165,8 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    flex: 1;
+    min-width: 0;
 }
 
 .prod-sec-heading {
@@ -187,6 +189,77 @@ ul {
     width: 1400px;
     display: flex;
     gap: 50px;
+}
+
+.search-container {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.search-container input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #1f2937;
+    font-family: 'Inter', sans-serif;
+}
+
+.search-container input::placeholder {
+    color: #9ca3af;
+}
+
+.search-clear-btn {
+    padding: 4px 12px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.search-clear-btn:hover {
+    background: #e5e7eb;
+}
+
+.search-clear-btn:active {
+    transform: scale(0.98);
+}
+
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    gap: 12px;
+    width: 100%;
+}
+
+.empty-state-text {
+    font-size: 18px;
+    color: #6b7280;
+}
+
+.loading-state-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 18px;
+    color: #6b7280;
+    width: 100%;
 }
 
 .filter {

@@ -20,7 +20,6 @@ const Category = () => {
     : ((prev) => prev.filter((cat) => cat !== value)))
   }
 
-  console.log(categories.selectedCategories)
   return (
     <div className="category">
       <div className="category-heading-container">

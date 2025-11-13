@@ -9,6 +9,5 @@ export const CartContext = createContext({
     clearCart: () => {},
     getTotal: () => 0,
     getCount: () => 0,
-    isInCart: () => null,
     refreshCart: () => {}
 });

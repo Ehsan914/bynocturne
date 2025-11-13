@@ -39,7 +39,7 @@
     cursor: pointer;
 }
 
-.search-container {
+/* .search-container {
     display: flex;
     align-items: center;
     position: relative;
@@ -68,7 +68,7 @@
     height: 40px;
     box-sizing: border-box;
     margin: 0 20px;
-}
+} */
 
 .options {
     display: flex;

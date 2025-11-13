@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import toast from 'react-hot-toast';
 import './register.css'
 
 const Register = () => {
@@ -37,12 +38,16 @@ const Register = () => {
         e.preventDefault();
 
         if (!agreeTerms) {
-            setError('You must agree to the Terms of Service and Privacy Policy');
+            const errorMsg = 'You must agree to the Terms of Service and Privacy Policy';
+            setError(errorMsg);
+            toast.error(errorMsg);
             return;
         }
 
         if (formData.password !== confirmPassword) {
-            setError('Passwords do not match');
+            const errorMsg = 'Passwords do not match';
+            setError(errorMsg);
+            toast.error(errorMsg);
             return;
         }
 
@@ -51,9 +56,12 @@ const Register = () => {
 
         try {
             await register(formData);
+            toast.success('Registration successful! Welcome!');
             navigate('/');
         } catch (err) {
-            setError(err.response?.data?.error || "Registration failed. Please try again");
+            const errorMsg = err.response?.data?.error || "Registration failed. Please try again";
+            setError(errorMsg);
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }

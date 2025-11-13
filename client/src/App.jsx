@@ -8,6 +8,7 @@ import './navbar.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ProtectedRoute from './routes/ProtectedRoute'
+import { Toaster } from 'react-hot-toast'
 
 // Admin
 import Dashboard from './pages/admin/Dashboard'
@@ -19,6 +20,30 @@ import Settings from './pages/admin/Settings'
 const App = () => {
   return (
     <>
+      <Toaster 
+        position="bottom-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            duration: 4000,
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <Navbar />  {/* Always visible */}
       <Routes>
         <Route path="/" element={<Home />} />

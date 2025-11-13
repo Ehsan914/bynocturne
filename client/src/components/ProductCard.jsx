@@ -1,31 +1,64 @@
 import { useContext } from "react";
 import { LiaStarSolid } from "react-icons/lia";
 import { IoHeartSharp } from "react-icons/io5";
-import { CountContext } from "../context/CountContext";
+import { CartContext } from "../context/CartContext";
+import { WishlistContext } from "../context/WishlistContext.js";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 const ProductCard = ({ product }) => {
     const prod = product;
-    const {
-        wishlistItems = [],
-        setWishlistItems = () => {},
-        cartItems = [],
-        addToCart = () => {},
-    } = useContext(CountContext);
-
-    const isWishlisted = wishlistItems.some(item => item.id === prod.id);
-    const isInCart = cartItems.some(item => item.id === prod.id);
-
-    const toggleCart = () => {
-        addToCart(prod);
-    };
-
-    console.log(prod.ratingAmount);
+    const navigate = useNavigate();
     
-    const toggleWishlist = () => {
-        if (wishlistItems.some(item => item.id === prod.id)) {
-            setWishlistItems(wishlistItems.filter(item => item.id !== prod.id));
+    const { addToCart, removeItem, isInCart } = useContext(CartContext);
+    const { addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useContext(WishlistContext);
+    const { isAuthenticated } = useContext(AuthContext);
+    
+    const wishlistItem = isInWishlist(prod.id);
+    const cartItem = isInCart(prod.id);
+
+    const toggleCart = async () => {
+        if (!isAuthenticated) {
+            toast.error('Please login to add items to cart');
+            navigate('/login');
+            return;
+        }
+
+        if (cartItem) {
+            const result = await removeItem(cartItem.cart_id);
+            if (result.success) {
+                toast.success('Removed from cart');
+            }
         } else {
-            setWishlistItems([...wishlistItems, prod]);
+            const result = await addToCart(prod.id, 1);
+            if (result.success) {
+                toast.success('Added to cart');
+            } else {
+                toast.error(result.error || 'Failed to add to cart');
+            }
+        }
+    };
+    
+    const toggleWishlist = async () => {
+        if (!isAuthenticated) {
+            toast.error('Please login to add items to wishlist');
+            navigate('/login');
+            return;
+        }
+
+        if (wishlistItem) {
+            const result = await removeFromWishlist(wishlistItem.wishlist_id);
+            if (result.success) {
+                toast.success('Removed from wishlist');
+            }
+        } else {
+            const result = await addToWishlist(prod.id);
+            if (result.success) {
+                toast.success('Added to wishlist');
+            } else {
+                toast.error(result.error || 'Failed to add to wishlist');
+            }
         }
     };
 
@@ -36,8 +69,8 @@ const ProductCard = ({ product }) => {
             <IoHeartSharp
             className="wishlist-btn-icon"
             style={{
-                fill: isWishlisted ? "red" : "none",
-                strokeWidth: isWishlisted ? 0 : 40,
+                fill: wishlistItem ? "red" : "none",
+                strokeWidth: wishlistItem ? 0 : 40,
             }}
             />
         </section>
@@ -62,9 +95,13 @@ const ProductCard = ({ product }) => {
                 <button
                 className="add-to-cart-btn"
                 onClick={toggleCart}
-                style={{ backgroundColor: isInCart ? "#8B8B8D" : "#1F1F21" }}
+                style={{ 
+                    backgroundColor: cartItem ? "white" : "#1F1F21",
+                    color: cartItem ? "red" : "white",
+                    border: cartItem ? "2px solid red" : "none"
+                }}
                 >
-                {isInCart ? "Added" : "Add to Cart"}
+                {cartItem ? "Remove Item" : "Add to Cart"}
                 </button>
             </div>
             </section>

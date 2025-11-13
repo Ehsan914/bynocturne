@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import toast from 'react-hot-toast';
 import './login.css'
 
 const Login = () => {
@@ -41,9 +42,12 @@ const Login = () => {
                 localStorage.removeItem('rememberedEmail');
             }
             
+            toast.success('Login successful! Welcome back!');
             navigate('/');
         } catch (err) {
-            setError(err.response?.data?.error || "Login failed. Please try again");
+            const errorMsg = err.response?.data?.error || "Login failed. Please try again";
+            setError(errorMsg);
+            toast.error(errorMsg);
         } finally {
             setLoading(false);
         }
