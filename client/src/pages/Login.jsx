@@ -1,13 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import './login.css'
 
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -84,14 +85,23 @@ const Login = () => {
                         {/* Password Field */}
                         <div className="form-group">
                             <label htmlFor="password" className="form-head-txt">Password</label>
-                            <input 
-                                id="password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Enter your password"
-                                required
-                            />
+                            <div className="password-input-wrapper">
+                                <input 
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Enter your password"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="password-toggle-btn"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
                         </div>
 
                         {/* Remember Me & Forgot Password */}
@@ -116,7 +126,7 @@ const Login = () => {
                     </form>
 
                     {/* Divider */}
-                    <div className="divider">
+                    <div className="login-divider">
                         <span className="half-divider"></span>
                         <span className="divider-txt">or continue with</span>
                         <span className="half-divider"></span>

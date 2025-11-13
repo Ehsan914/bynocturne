@@ -6,6 +6,8 @@ import Account from './pages/Account'
 import Navbar from './components/Navbar'
 import './navbar.css'
 import Login from './pages/Login'
+import Register from './pages/Register'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 // Admin
 import Dashboard from './pages/admin/Dashboard'
@@ -20,10 +22,11 @@ const App = () => {
       <Navbar />  {/* Always visible */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+        <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
         <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
         {/* Admin */}
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/products" element={<Products />} />

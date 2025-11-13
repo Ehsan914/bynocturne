@@ -79,7 +79,7 @@ const Navbar = () => {
                                         )}
                                     </div>
                                     <div className="divider"></div>
-                                    <div onClick={() => navigate('/account')} className="profile-optn-btn optn">
+                                    <div onClick={() => { navigate('/account'); setShowDropdown(false); }} className="profile-optn-btn optn">
                                         <FiUser />
                                         <span>Profile</span>
                                     </div>
@@ -90,11 +90,11 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <>
-                                    <div onClick={() => navigate('/login') } className="profile-optn-btn optn">
+                                    <div onClick={() => { navigate('/login'); setShowDropdown(false); }} className="profile-optn-btn optn">
                                         <User className="sign-out-icon"/>
                                         <span>Sign In</span>
                                     </div>
-                                    <div onClick={() => navigate('/register')} className="profile-optn-btn optn">
+                                    <div onClick={() => { navigate('/register'); setShowDropdown(false); }} className="profile-optn-btn optn">
                                         <UserPlus className="sign-out-icon"/>
                                         <span>Sign Up</span></div>
                                 </>
