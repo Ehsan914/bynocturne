@@ -63,10 +63,7 @@ const Account = () => {
   const handlePaymentSuccess = async (paymentIntent) => {
     try {
       // Confirm payment with backend
-      await confirmPayment({
-        paymentIntentId: paymentIntent.id,
-        orderId: selectedOrder.id
-      });
+      await confirmPayment(paymentIntent.id, selectedOrder.id);
 
       toast.success('Payment successful! Your order has been confirmed.');
       setShowCheckout(false);
@@ -179,17 +176,17 @@ const Account = () => {
                           {order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1)}
                         </span>
                       </div>
+                      {order.payment_status === 'pending' && (
+                        <div className="detail-item order-actions">
+                          <button 
+                            className="make-payment-btn"
+                            onClick={() => handleMakePayment(order)}
+                          >
+                            Make Payment
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    {order.payment_status === 'pending' && (
-                      <div className="order-actions">
-                        <button 
-                          className="make-payment-btn"
-                          onClick={() => handleMakePayment(order)}
-                        >
-                          Make Payment
-                        </button>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
