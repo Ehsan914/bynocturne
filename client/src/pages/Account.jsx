@@ -4,6 +4,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import { getUserOrders } from '../api/orderAPI';
+import { confirmPayment } from '../api/paymentAPI';
+import Checkout from '../components/Checkout';
 import toast from 'react-hot-toast';
 
 const Account = () => {
@@ -13,6 +15,8 @@ const Account = () => {
   const { user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -49,6 +53,36 @@ const Account = () => {
       cancelled: '#f44336'
     };
     return colors[status] || '#666';
+  };
+
+  const handleMakePayment = (order) => {
+    setSelectedOrder(order);
+    setShowCheckout(true);
+  };
+
+  const handlePaymentSuccess = async (paymentIntent) => {
+    try {
+      // Confirm payment with backend
+      await confirmPayment({
+        paymentIntentId: paymentIntent.id,
+        orderId: selectedOrder.id
+      });
+
+      toast.success('Payment successful! Your order has been confirmed.');
+      setShowCheckout(false);
+      setSelectedOrder(null);
+      
+      // Refresh orders
+      fetchOrders();
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+      toast.error('Payment processed but order update failed. Please contact support.');
+    }
+  };
+
+  const handlePaymentCancel = () => {
+    setShowCheckout(false);
+    setSelectedOrder(null);
   };
 
   return (
@@ -146,6 +180,16 @@ const Account = () => {
                         </span>
                       </div>
                     </div>
+                    {order.payment_status === 'pending' && (
+                      <div className="order-actions">
+                        <button 
+                          className="make-payment-btn"
+                          onClick={() => handleMakePayment(order)}
+                        >
+                          Make Payment
+                        </button>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -153,6 +197,19 @@ const Account = () => {
           </div>
         )}
       </div>
+
+      {/* Payment Modal */}
+      {showCheckout && selectedOrder && (
+        <div className="payment-modal-overlay" onClick={handlePaymentCancel}>
+          <div className="payment-modal-content" onClick={(e) => e.stopPropagation()}>
+            <Checkout
+              amount={parseFloat(selectedOrder.total_amount)}
+              onSuccess={handlePaymentSuccess}
+              onCancel={handlePaymentCancel}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
