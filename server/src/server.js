@@ -10,6 +10,7 @@ import cartRoutes from './routes/cartRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -52,6 +53,9 @@ app.use('/api/orders', orderRoutes);
 
 // Payment Routes
 app.use('/api/payment', paymentRoutes);
+
+// Admin Routes
+app.use('/api/admin', adminRoutes);
 
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000;

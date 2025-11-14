@@ -4,6 +4,7 @@ import { FiUser } from "react-icons/fi";
 import { LogOut } from 'lucide-react';
 import { User } from 'lucide-react';
 import { UserPlus } from 'lucide-react';
+import { Shield } from 'lucide-react';
 // import { IoSearchOutline } from "react-icons/io5";
 import logo from '../assets/logo2.png'
 import { AuthContext } from "../context/AuthContext";
@@ -79,6 +80,12 @@ const Navbar = () => {
                                         )}
                                     </div>
                                     <div className="divider"></div>
+                                    {user?.role === 'admin' && (
+                                        <div onClick={() => { navigate('/admin/dashboard'); setShowDropdown(false); }} className="profile-optn-btn optn admin-btn">
+                                            <Shield size={18} />
+                                            <span>Admin Panel</span>
+                                        </div>
+                                    )}
                                     <div onClick={() => { navigate('/account'); setShowDropdown(false); }} className="profile-optn-btn optn">
                                         <FiUser />
                                         <span>Profile</span>

@@ -17,7 +17,13 @@ function parseImagesField(images) {
 
 // Get all products
 export const getAllProducts = (req, res) => {
-  connection.query('SELECT * FROM products', (err, results) => {
+  const query = `
+    SELECT p.*, c.name as category_name 
+    FROM products p 
+    LEFT JOIN categories c ON p.category_id = c.id
+  `;
+  
+  connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Database query failed' });
     }
@@ -52,7 +58,14 @@ export const getProductById = (req, res) => {
     return res.status(400).json({ error: 'Invalid product id' });
   }
 
-  connection.query('SELECT * FROM products WHERE id = ?', [id], (err, results) => {
+  const query = `
+    SELECT p.*, c.name as category_name 
+    FROM products p 
+    LEFT JOIN categories c ON p.category_id = c.id
+    WHERE p.id = ?
+  `;
+
+  connection.query(query, [id], (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Database query failed' });
     }

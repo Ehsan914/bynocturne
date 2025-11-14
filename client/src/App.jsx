@@ -1,4 +1,4 @@
-import { Router, Routes, Route } from 'react-router-dom'
+import { Router, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Wishlist from './pages/Wishlist'
@@ -9,6 +9,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ProtectedRoute from './routes/ProtectedRoute'
 import { Toaster } from 'react-hot-toast'
+import AdminLayout from './layouts/AdminLayout'
 
 // Admin
 import Dashboard from './pages/admin/Dashboard'
@@ -18,6 +19,9 @@ import Orders from './pages/admin/Orders'
 import Settings from './pages/admin/Settings'
 
 const App = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
     <>
       <Toaster 
@@ -44,7 +48,7 @@ const App = () => {
           },
         }}
       />
-      <Navbar />  {/* Always visible */}
+      {!isAdminRoute && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
@@ -52,12 +56,15 @@ const App = () => {
         <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
-        {/* Admin */}
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/products" element={<Products />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/orders" element={<Orders />} />
-        <Route path="/admin/settings" element={<Settings />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="products" element={<Products />} />
+          <Route path="users" element={<Users />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
       </Routes>
     </>
   );
